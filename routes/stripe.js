@@ -1,12 +1,14 @@
 const router = require('express').Router();
+const dotenv = require('dotenv');
+dotenv.config();
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-router.post("/payment", (req, res) => {
+router.post('/payment', (req, res) => {
     stripe.charges.create(
         {
             source: req.body.tokenId,
             amount: req.body.amount,
-            currency: "usd",
+            currency: 'usd',
         },
         (stripeErr, stripeRes) => {
             if (stripeErr) {
